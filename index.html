@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini Google 1998</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f8f9fa;
+      color: #202124;
+      line-height: 1.5;
+      padding: 24px 16px;
+    }
+    .container { max-width: 1100px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 24px; }
+    .logo {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 2px;
+      font-family: "Times New Roman", Times, Georgia, serif;
+      font-size: 52px;
+      font-weight: bold;
+      letter-spacing: -1px;
+      user-select: none;
+      margin-bottom: 4px;
+    }
+    .blue { color: #4285F4; } .red { color: #EA4335; }
+    .yellow { color: #FBBC05; } .green { color: #34A853; }
+    .exclamation { display: inline-block; margin-left: 2px; transform: rotate(5deg); }
+    .year {
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      color: #fff;
+      background: #EA4335;
+      padding: 3px 8px;
+      border-radius: 12px;
+      margin-left: 8px;
+      vertical-align: middle;
+      letter-spacing: .5px;
+    }
+    .tagline { font-size: 14px; color: #5f6368; margin-top: 4px; }
+
+    .search-wrap { max-width: 620px; margin: 0 auto 16px; }
+    .search-form { display: flex; gap: 8px; margin-bottom: 12px; }
+    .search-input {
+      flex: 1;
+      padding: 12px 16px;
+      font-size: 16px;
+      border: 2px solid #dfe1e5;
+      border-radius: 24px;
+      outline: none;
+      background: #fff;
+      transition: .2s;
+    }
+    .search-input:focus {
+      border-color: #4285F4;
+      box-shadow: 0 1px 6px rgba(66,133,244,.28);
+    }
+    .button {
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      padding: 10px 18px;
+      border: 1px solid #dcdcdc;
+      border-radius: 20px;
+      background: #f1f3f4;
+      color: #3c4043;
+      white-space: nowrap;
+      transition: .15s;
+    }
+    .button:hover { background: #e8eaed; border-color: #dadce0; color: #202124; }
+    .search-button { background: #4285F4; color: #fff; border-color: #4285F4; }
+    .search-button:hover { background: #3367d6; border-color: #3367d6; color: #fff; }
+
+    .examples {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      color: #5f6368;
+    }
+    .chip {
+      background: #fff;
+      border: 1px solid #dadce0;
+      padding: 6px 14px;
+      border-radius: 16px;
+      font-size: 13px;
+      cursor: pointer;
+      color: #1a73e8;
+      font-weight: 500;
+    }
+    .chip:hover { background: #e8f0fe; border-color: #1a73e8; }
+
+    .status {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 10px 16px;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      margin-bottom: 24px;
+      font-size: 13px;
+      color: #444;
+    }
+    .surfer-button {
+      background: #e6f4ea;
+      color: #137333;
+      border-color: #ceead6;
+    }
+    .surfer-button:hover { background: #ceead6; color: #0d652d; }
+
+    .results { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .panel {
+      background: #fff;
+      border: 1px solid #dadce0;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 1px 3px rgba(0,0,0,.05);
+    }
+    .panel-head { padding: 16px 20px; border-bottom: 2px solid #e0e0e0; }
+    .panel-head.old { background: #fff8f6; border-bottom-color: #ea4335; }
+    .panel-head.surfer { background: #f0fdf4; border-bottom-color: #34a853; }
+    .panel-title {
+      font-size: 18px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .old .panel-title { color: #c5221f; }
+    .surfer .panel-title { color: #137333; }
+    .subtitle { font-size: 12px; color: #5f6368; }
+    .list { padding: 16px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+
+    .card {
+      background: #fff;
+      border: 1px solid #e8eaed;
+      border-radius: 8px;
+      padding: 14px;
+      transition: .15s;
+    }
+    .card:hover { border-color: #bdc1c6; box-shadow: 0 2px 6px rgba(0,0,0,.08); }
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .rank {
+      font-size: 12px;
+      font-weight: bold;
+      padding: 2px 8px;
+      border-radius: 10px;
+      color: #fff;
+    }
+    .rank.old { background: #ea4335; }
+    .rank.surfer { background: #188038; }
+    .badges { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .badge {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 12px;
+    }
+    .count { background: #feefe3; color: #b06000; border: 1px solid #fbd5b5; }
+    .score { background: #e6f4ea; color: #137333; border: 1px solid #ceead6; }
+    .links { background: #e8f0fe; color: #1a73e8; border: 1px solid #d2e3fc; }
+    .url {
+      display: block;
+      font-size: 13px;
+      color: #006621;
+      text-decoration: none;
+      word-break: break-all;
+      margin-bottom: 6px;
+      font-family: Consolas, "Courier New", monospace;
+    }
+    .url:hover { text-decoration: underline; }
+    .text { font-size: 14px; color: #3c4043; line-height: 1.45; }
+    mark { background: #fff176; color: #000; padding: 1px 3px; border-radius: 3px; font-weight: bold; }
+
+    .no-results {
+      display: none;
+      background: #fff;
+      border: 2px dashed #dadce0;
+      border-radius: 12px;
+      padding: 40px 24px;
+      text-align: center;
+      margin: 10px 0;
+    }
+    .no-icon { font-size: 48px; margin-bottom: 12px; }
+    .no-title { font-size: 20px; margin-bottom: 8px; }
+    .no-desc { font-size: 14px; color: #5f6368; max-width: 500px; margin: 0 auto 16px; }
+
+    .dataset {
+      margin-top: 36px;
+      background: #fff;
+      border: 1px solid #dadce0;
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .dataset summary { cursor: pointer; font-weight: bold; font-size: 14px; color: #1a73e8; outline: none; }
+    .table-wrap { margin-top: 14px; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    th, td { border: 1px solid #e0e0e0; padding: 8px 10px; text-align: left; }
+    th { background: #f1f3f4; font-weight: 600; }
+    tr:nth-child(even) { background: #fcfcfc; }
+
+    @media (max-width: 768px) {
+      .results { grid-template-columns: 1fr; }
+      .logo { font-size: 38px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo" aria-label="Mini Google 1998">
+        <span class="blue">M</span><span class="red">i</span><span class="yellow">n</span><span class="blue">i</span>&nbsp;
+        <span class="blue">G</span><span class="red">o</span><span class="yellow">o</span><span class="blue">g</span><span class="green">l</span><span class="red">e</span><span class="green exclamation">!</span>
+        <span class="year">1998</span>
+      </div>
+      <p class="tagline">Comparing 1997 Keyword Frequency vs. 1998 PageRank Random Surfer</p>
+    </header>
+
+    <div class="search-wrap">
+      <form class="search-form" id="searchForm">
+        <input id="searchInput" class="search-input" type="text" value="pizza"
+          placeholder="Search for pizza, cricket, movie, exam..." autocomplete="off">
+        <button class="button search-button" type="submit">Search</button>
+      </form>
+      <div class="examples">
+        <span>Try an example:</span>
+        <button class="chip" type="button" data-word="pizza">pizza</button>
+        <button class="chip" type="button" data-word="cricket">cricket</button>
+        <button class="chip" type="button" data-word="movie">movie</button>
+        <button class="chip" type="button" data-word="exam">exam</button>
+      </div>
+    </div>
+
+    <div class="status">
+      <div id="statusText">Surfer simulated <strong>100,000 moves</strong> across the web graph.</div>
+      <button class="button surfer-button" id="rerunButton" type="button">🎲 Run the surfer again</button>
+    </div>
+
+    <main class="results" id="results">
+      <section class="panel">
+        <div class="panel-head old">
+          <div class="panel-title">
+            <span>Ranking 1: Old way (1997)</span>
+            <span class="badge count" id="oldCount">0 matches</span>
+          </div>
+          <p class="subtitle">Ranked by whole-word frequency. Most occurrences wins.</p>
+        </div>
+        <div class="list" id="oldList"></div>
+      </section>
+      <section class="panel">
+        <div class="panel-head surfer">
+          <div class="panel-title">
+            <span>Ranking 2: Surfer way (1998)</span>
+            <span class="badge score" id="surferCount">0 matches</span>
+          </div>
+          <p class="subtitle">Ranked by Random Surfer score (PageRank) from 100,000 moves.</p>
+        </div>
+        <div class="list" id="surferList"></div>
+      </section>
+    </main>
+
+    <div class="no-results" id="noResults">
+      <div class="no-icon">🦖 🕸️</div>
+      <h2 class="no-title">No matching web pages found!</h2>
+      <p class="no-desc" id="noMessage"></p>
+      <div class="examples" style="margin-bottom:0">
+        <span>Try searching for:</span>
+        <button class="chip" type="button" data-word="pizza">pizza</button>
+        <button class="chip" type="button" data-word="cricket">cricket</button>
+        <button class="chip" type="button" data-word="movie">movie</button>
+        <button class="chip" type="button" data-word="exam">exam</button>
+      </div>
+    </div>
+
+    <details class="dataset">
+      <summary>📂 View the dataset inside this file (16 web pages)</summary>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Page #</th><th>URL</th><th>Links To</th><th>Links In</th><th>Surfer Score</th><th>Text</th></tr></thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </details>
+  </div>
+
+  <script>
+    const PAGES = [
+      {page:1,url:"http://www.discount-pizza-deals-spam.com",text:"Pizza pizza pizza cheap pizza fast pizza buy pizza best pizza pizza order pizza delivery pizza online now.",links:"2"},
+      {page:2,url:"http://www.tonys-authentic-pizza.org",text:"Welcome to Tony's kitchen. We bake traditional wood-fired pizza with fresh basil and mozzarella.",links:"3;4;6"},
+      {page:3,url:"http://www.city-food-guide.com",text:"The annual city food guide features great Italian pizza, street food stalls, and the best bakery treats.",links:"2;4;7"},
+      {page:4,url:"http://www.gourmet-recipes.net",text:"Learn how to make homemade pizza dough with our step by step guide for the perfect crust.",links:"2;3"},
+      {page:5,url:"http://www.cricket-cricket-superfan.com",text:"Cricket cricket cricket watch live cricket scores cricket bats cricket balls cricket highlights cricket now.",links:"6"},
+      {page:6,url:"http://www.international-cricket-council.org",text:"Official updates on test match tournaments, international cricket rankings, team schedules, and world cup fixtures.",links:"7;8;2;14"},
+      {page:7,url:"http://www.world-sports-gazette.com",text:"Daily sports coverage highlighting international cricket finals, stadium news, and star player interviews.",links:"6;8;10"},
+      {page:8,url:"http://www.cricket-club-history.edu",text:"Explore the nineteenth century origins and timeless traditions of the game of cricket.",links:"6;7"},
+      {page:9,url:"http://www.free-movie-downloads-watch.net",text:"Movie movie movie watch movie download movie full movie stream HD movie blockbuster movie free.",links:"10"},
+      {page:10,url:"http://www.national-film-archive.org",text:"The national archive preserves classic cinema, documentary treasures, and celebrated movie milestones.",links:"11;12;6;14"},
+      {page:11,url:"http://www.cinema-reviews-weekly.com",text:"Independent critics rate the latest weekend movie release, screenplay adaptations, and director interviews.",links:"10;12"},
+      {page:12,url:"http://www.hollywood-chronicle.com",text:"Behind the scenes reports from studio sets, festival premieres, and award winning movie actors.",links:"10;11;3"},
+      {page:13,url:"http://www.pass-exam-fast-cheat-tips.biz",text:"Exam exam exam pass any exam study exam answers easy exam tricks quick exam prep exam.",links:"14"},
+      {page:14,url:"http://www.central-university-portal.edu",text:"Official academic calendar, student registration guidelines, course syllabus, and final exam timetable.",links:"15;16;6;10"},
+      {page:15,url:"http://www.student-study-skills-hub.org",text:"Effective memory revision techniques, time management habits, and calm mindset for your upcoming exam.",links:"14;16"},
+      {page:16,url:"http://www.campus-library-resources.edu",text:"Access past papers, reference textbooks, and silent study zones during mid term exam week.",links:"14;15;2"}
+    ].map(p => ({
+      ...p,
+      outLinks: p.links ? p.links.split(";").map(Number).filter(Boolean) : [],
+      visits: 0,
+      linksIn: 0,
+      score: "0.0%"
+    }));
+
+    const pageMap = Object.fromEntries(PAGES.map(p => [p.page,p]));
+    function computeLinksIn() {
+      PAGES.forEach(p => p.linksIn = 0);
+      PAGES.forEach(source => new Set(source.outLinks).forEach(target => {
+        if (pageMap[target]) pageMap[target].linksIn++;
+      }));
+    }
+
+    function runSurfer() {
+      PAGES.forEach(p => p.visits = 0);
+      let current = PAGES[Math.floor(Math.random() * PAGES.length)];
+      for (let i = 0; i < 100000; i++) {
+        if (Math.random() < .15 || current.outLinks.length === 0) {
+          current = PAGES[Math.floor(Math.random() * PAGES.length)];
+        } else {
+          const target = current.outLinks[Math.floor(Math.random() * current.outLinks.length)];
+          current = pageMap[target] || PAGES[Math.floor(Math.random() * PAGES.length)];
+        }
+        current.visits++;
+      }
+      PAGES.forEach(p => p.score = ((p.visits / 100000) * 100).toFixed(1) + "%");
+    }
+
+    function escapeHtml(text) {
+      return String(text).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+    }
+    function countMatches(text, word) {
+      if (!word.trim()) return 0;
+      const escaped = word.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      return (text.match(new RegExp("\\b" + escaped + "\\b","gi")) || []).length;
+    }
+    function highlight(text, word) {
+      if (!word.trim()) return text;
+      const escaped = word.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      return text.replace(new RegExp("\\b(" + escaped + ")\\b","gi"), "<mark>$1</mark>");
+    }
+
+    function renderTable() {
+      document.getElementById("tableBody").innerHTML = PAGES.map(p => `
+        <tr><td><strong>${p.page}</strong></td><td><code>${p.url}</code></td>
+        <td>${p.links || "<em>none</em>"}</td><td>${p.linksIn}</td>
+        <td>${p.score}</td><td>${escapeHtml(p.text)}</td></tr>`).join("");
+    }
+
+    function search(query) {
+      const input = document.getElementById("searchInput");
+      input.value = query;
+      PAGES.forEach(p => p.count = countMatches(p.text, query));
+      const matches = PAGES.filter(p => p.count > 0);
+      const results = document.getElementById("results");
+      const noResults = document.getElementById("noResults");
+
+      if (!query.trim() || matches.length === 0) {
+        results.style.display = "none";
+        noResults.style.display = "block";
+        document.getElementById("noMessage").innerHTML =
+          `Even our high-speed 56k modem couldn't find any web pages matching "<strong>${escapeHtml(query || "nothing")}</strong>".<br>Try searching for a different keyword or click one of the examples above!`;
+        return;
+      }
+
+      results.style.display = "grid";
+      noResults.style.display = "none";
+      document.getElementById("oldCount").textContent = `${matches.length} ${matches.length === 1 ? "page" : "pages"}`;
+      document.getElementById("surferCount").textContent = `${matches.length} ${matches.length === 1 ? "page" : "pages"}`;
+
+      const oldRanked = [...matches].sort((a,b) => b.count - a.count || a.page - b.page);
+      const surferRanked = [...matches].sort((a,b) => b.visits - a.visits || a.page - b.page);
+
+      document.getElementById("oldList").innerHTML = oldRanked.map((p,i) => `
+        <article class="card">
+          <div class="card-top"><span class="rank old">Rank #${i+1}</span>
+            <div class="badges"><span class="badge count">Word count: ${p.count}</span></div></div>
+          <a class="url" href="${p.url}" target="_blank" rel="noopener">${p.url}</a>
+          <p class="text">${highlight(escapeHtml(p.text), query)}</p>
+        </article>`).join("");
+
+      document.getElementById("surferList").innerHTML = surferRanked.map((p,i) => `
+        <article class="card">
+          <div class="card-top"><span class="rank surfer">Rank #${i+1}</span>
+            <div class="badges"><span class="badge score">Surfer score: ${p.score}</span><span class="badge links">Links in: ${p.linksIn}</span></div></div>
+          <a class="url" href="${p.url}" target="_blank" rel="noopener">${p.url}</a>
+          <p class="text">${highlight(escapeHtml(p.text), query)}</p>
+        </article>`).join("");
+      renderTable();
+    }
+
+    document.getElementById("searchForm").addEventListener("submit", event => {
+      event.preventDefault();
+      search(document.getElementById("searchInput").value.trim());
+    });
+    document.querySelectorAll("[data-word]").forEach(button =>
+      button.addEventListener("click", () => search(button.dataset.word))
+    );
+    document.getElementById("rerunButton").addEventListener("click", event => {
+      runSurfer();
+      search(document.getElementById("searchInput").value.trim());
+      document.getElementById("statusText").innerHTML = `Surfer simulated <strong>100,000 moves</strong>. Completed just now!`;
+      event.currentTarget.textContent = "✓ 100,000 Moves Re-simulated!";
+      setTimeout(() => event.currentTarget.textContent = "🎲 Run the surfer again", 1500);
+    });
+
+    computeLinksIn();
+    runSurfer();
+    renderTable();
+    search("pizza");
+  </script>
+</body>
+</html>
